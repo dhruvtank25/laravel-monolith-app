@@ -1,0 +1,366 @@
+.priorities_desc p.imp_notice {
+font-family: 'montserratitalic';
+color: #292929;
+font-size: 13px;
+}
+.priorities_desc p.imp_notice span {
+font-family: 'Montserrat-Bold';
+}
+.availability_date_wrap {
+background-color: #fff;
+padding: 30px;
+margin-bottom: 60px;
+}
+input:focus, input:active {
+outline: none;
+}
+.avail_from_to .period_range_val input {
+border: none;
+width: 120px;
+text-align: center;
+}
+.availability_date_wrap h6 {
+font-family: 'Montserrat-Bold';
+color: #292929;
+}
+.select_avail p {
+font-family: 'Montserrat-Regular';
+color: #fff;
+font-size: 16px;
+background-color: #84D9E5;
+display: inline-block;
+padding: 3px 15px;
+border-radius: 20px;
+}
+.range_period_slider .slider {
+width: 100%;
+position: relative;
+background-color: transparent;
+}
+.range_period_slider .slider:before {
+display: none;
+}
+.range_period_slider .slider.slider-horizontal .slider-track {
+height: 5px;
+width: 100%;
+margin-top: -3px;
+top: 50%;
+left: 0;
+border-radius: 0px;
+background-color: #C4C4C4;
+background-image: none;
+box-shadow: none;
+}
+.range_period_slider .slider-selection {
+background-image: none;
+background-color: #84D9E5;
+box-shadow: none;
+}
+.range_period_slider .slider-handle {
+background-color: #fff;
+background-image: none;
+border: 2px solid #000;
+}
+.range_period_slider p {
+display: inline-block;
+vertical-align: middle;
+width: auto;
+padding: 3px 15px;
+}
+.period_range_val {
+border: 1px solid #292929;
+border-radius: 20px;
+}
+.avail_from_to p {
+display: inline-block;
+vertical-align: middle;
+width: auto;
+padding: 3px 15px;
+}
+.crt_series .ano_select h6, .crt_series .ano_select .selection_wrapper {
+display: inline-block;
+vertical-align: middle;
+width: auto;
+}
+.crt_series .ano_select .selection_wrapper label.switch {
+margin-bottom: 0px;
+margin-right: 5px;
+}
+.week_select input {
+width: 80px;
+display: inline-block;
+border: 1px solid #292929;
+padding: 5px;
+height: 32px;
+border-radius: 0px;
+}
+.clear_period_data {
+border-bottom: 3px solid #F2F2F2;
+}
+.period_hidden {
+display: none;
+width: 100%;
+}
+.know_category.period_cate input[type=radio].css-checkbox+label.css-label {
+font-family: 'Montserrat-Regular';
+}
+/* custom date picker */
+
+.period_date_wrap .ui-datepicker .ui-datepicker-next span , .ui-datepicker .ui-datepicker-next span {
+background-image: url('../img/right-arrow.png');
+background-position: center;
+background-size: 12px;
+}
+.period_date_wrap .ui-datepicker .ui-datepicker-prev span, .ui-datepicker .ui-datepicker-prev span{
+background-image: url(../img/left-arrow.png);
+background-position: center;
+background-size: 12px;
+}
+.period_date_wrap .ui-widget.ui-widget-content {
+margin: 0 auto;
+border: none;
+}
+.period_date_wrap .ui-widget-header {
+border: none;
+background: transparent;
+color: #000;
+font-size: 14px;
+font-family: 'Montserrat-Bold';
+}
+.ui-widget-header{
+background: transparent;
+color: #000;
+font-size: 14px;
+font-family: 'Montserrat-Bold';
+}
+.period_date_wrap .ui-state-default, .ui-widget-content .ui-state-default {
+border: 1px solid transparent;
+background: transparent;
+font-family: 'Montserrat-Regular';
+font-size: 12px;
+text-align: center;
+}
+.period_date_wrap .ui-widget-content .ui-state-active, .ui-widget-content .ui-state-active{
+border: 1px solid #000 !important;
+background-color: #84D9E5 !important;
+font-family: 'Montserrat-Bold';
+font-size: 12px;
+color: #fff;
+}
+.ui-widget-content.ui-datepicker td.light_green .ui-state-default{
+border: 1px solid transparent;
+background: #d3fcd2;
+}
+.ui-widget-content.ui-datepicker td.drk_green .ui-state-default{
+border: 1px solid transparent;
+background: #3b7141;
+color:#fff;
+}
+.ui-widget-content.ui-datepicker td.red .ui-state-default{
+border: 1px solid transparent;
+background: #f86c59;
+}
+.period_date_wrap .ui-widget-header .ui-state-hover.ui-datepicker-next-hover, .period_date_wrap .ui-widget-header .ui-state-hover.ui-datepicker-prev-hover, .ui-widget-header .ui-state-hover.ui-datepicker-next-hover, .ui-widget-header .ui-state-hover.ui-datepicker-prev-hover{
+border: 1px solid transparent;
+background: transparent;
+}
+.period_date_wrap .ui-datepicker .ui-datepicker-next-hover, .ui-datepicker .ui-datepicker-next-hover {
+right: 2px;
+top: 2px;
+}
+.period_date_wrap .ui-datepicker .ui-datepicker-prev-hover, .ui-datepicker .ui-datepicker-prev-hover{
+left: 2px;
+top: 2px;
+}
+/* custom date picker end */
+
+/* custom by Alok */
+
+/* custom radio button */
+.know_category input[type=radio].css-checkbox {
+position:absolute; z-index:-1000; left:-1000px; overflow: hidden; clip: rect(0 0 0 0); height:1px; width:1px; margin:-1px; padding:0; border:0;
+}
+.know_category input[type=radio].css-checkbox + label.css-label {
+padding-left:27px;
+height:19px; 
+display:inline-block;
+line-height:18px;
+background-repeat:no-repeat;
+background-position: 0 0;
+font-family: 'montserratitalic';
+color:#292929;
+font-size:14px;
+vertical-align:middle;
+cursor:pointer;
+}
+.know_category input[type=radio].css-checkbox:checked + label.css-label {
+background-position: 0 -19px;
+}
+label.css-label {
+background-image:url('../img/custom_radio.png');
+background-size: 18px;
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+/* custom radio button end */
+
+/* The switch - the box around the slider */
+.switch {
+position: relative;
+display: inline-block;
+width: 60px;
+height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+opacity: 0;
+width: 0;
+height: 0;
+}
+
+/* The slider */
+.slider {
+position: absolute;
+cursor: pointer;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background-color: #ccc;
+-webkit-transition: .4s;
+transition: .4s;
+}
+
+.slider:before {
+position: absolute;
+content: "";
+height: 26px;
+width: 26px;
+left: 4px;
+bottom: 4px;
+background-color: white;
+-webkit-transition: .4s;
+transition: .4s;
+content: "\f00c";
+font: normal normal normal 14px/1 FontAwesome;
+padding: 5px;
+color:#cccccc;
+}
+
+input:checked + .slider {
+background-color: #84D9E5;
+}
+
+input:focus + .slider {
+box-shadow: 0 0 1px #84D9E5;
+}
+
+input:focus + .slider:before ,input:checked + .slider:before{
+color:#84D9E5;
+}
+
+input:checked + .slider:before {
+-webkit-transform: translateX(26px);
+-ms-transform: translateX(26px);
+transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+border-radius: 34px;
+}
+.slider.round:before {
+border-radius: 50%;
+}
+.ano_select h3,.ano_select .selection_wrapper{
+display: inline-block;
+vertical-align: middle;
+width: 48%;
+font-family: 'Montserrat-Regular';
+color: #292929;
+}
+.ano_desc{
+font-family: 'montserratitalic';
+color: #292929;
+font-size: 13px;
+}
+.ano_select h3{
+font-size: 16px;
+margin-top: 20px;
+}
+
+
+/* Buttons */
+.orange_background_btn{
+border:none;
+color: #ffffff;
+font-family: 'Montserrat-Bold';
+border: 2px solid transparent;
+font-size: 14px;
+border-radius: 20px;
+padding: 5px 20px;
+background: #F86C59;   
+cursor:pointer; 
+}
+.orange_background_btn:hover{
+color:#fff;
+}
+.orange_background_btn:focus{
+box-shadow:none;
+}
+.blk_bor_btn{
+border-radius: 20px;
+font-size: 14px;
+border: 2px solid #292929;
+color: #292929;
+font-family: 'Montserrat-Bold';
+padding: 5px 20px;
+}
+.blk_bor_btn:focus{
+box-shadow:none;
+}
+.blk_bor_btn, .orange_background_btn{
+font-size:12px;
+padding: 3px 15px;
+}
+/* custom end */
+
+/* media queries */
+
+@media(max-width:1200px) {
+.ch_detail_period .ui-widget.ui-widget-content {
+width: auto !important;
+}
+}
+@media(max-width:991px) {
+.ch_detail_period .ui-widget.ui-widget-content {
+width: 100% !important;
+}
+.ch_detail_period .ui-datepicker-multi-2 .ui-datepicker-group {
+width: 100%;
+}
+}
+@media(max-width:768px) {
+.period_date_wrap .ui-widget.ui-widget-content {
+    width: 100% !important;
+}
+}
+@media(max-width:640px) {}
+@media(max-width:560px) {
+.ui-datepicker-multi-2 .ui-datepicker-group {
+    width: 100%;
+}
+}
+@media(max-width:480px) {
+.furthur_period_btn button {
+    width: 195px;
+    display: block;
+    float: none;
+    margin: 0 auto 15px !important;
+}
+}

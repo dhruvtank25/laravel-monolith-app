@@ -1,0 +1,88 @@
+ MYADVICE SERVER DETAILS
+
+http://himmlischberaten.de/
+username: beta
+password: himmlischberatenbeta
+
+Admin login
+Test admin@admin.com / 123456
+Prod
+christian.list@himmlischberaten.de
+Epheser6,13
+
+Christian Coach login Prod
+christian.list@cvjm-hochstetten.de
+Live123#
+
+FTP
+user:  ubuntu
+private key file
+
+PHPMYADMIN
+darpan1985
+http://167.172.34.127/phpmyadmin
+root
+darpan1985
+http://himmlischberaten.de/phpmyadmin
+root
+Himmlisch@123
+
+MANGOPAY SANDBOX
+https://dashboard.sandbox.mangopay.com/
+client ID:  beratertest
+e-mail:     ch.list@web.de
+Password: Segen2020#
+Demo:- https://www.mangopay.com/demo/
+
+MANGOPAY PROD
+https://dashboard.mangopay.com/
+client ID:  himmlischberaten
+e-mail:     ch.list@web.de
+Password: Epheser6,13#
+API Key: V88wNJ6Z067EcxVCfO08QOv9u4Oja465aCbR62H8130HRJUYMb
+
+BOOKEEPING (Reviso TEST)
+https://reviso.com
+Email:    milind9620@gmail.com
+User ID: mil
+
+Portal login:
+Agreement number: 1184450
+Password: tu8ih7bh
+
+Developer login:
+Agreement no.: 1184759
+Password: pupef8zk
+
+Agreement Grant Token:
+IqSXhLP7jx0sxcckM6CFNvfkUPUPnMgGmUX6Doxwwmk1
+APP SECRET:
+HKMaO46i3hjWfIHunfmM8tg58ncl8WbBmY4nWUZshEo1
+
+
+REVISO LIVE
+User ID: chr
+
+Developer login:
+Agreement no.: 1189840
+Password: shkfyv3f
+
+Portal login:
+Agreement no.: 1181491
+Password: Beatrice0712
+
+Agreement Grant Token:
+zKHhum0LcthSBMm3F343cTg29TFh2yKLQ8PGUyqbQqw1
+APP SECRET:
+kptyi4VHSRgiiLx2bHSZ0He5TJGmnzmBzNl8jXf3i4U1
+
+APIRTC:
+https://cloud.apirtc.com/
+email:        alok@creative-mantra.com
+password: Password123
+https://himmlischberaten.de/api-rtc?user_id=1&client_id=2
+Demo/Tutorial: https://dev.apirtc.com/tutos/
+
+MAILGUN:
+email: Christian.list@himmlischberaten.de
+password: Epheser6,13#

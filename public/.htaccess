@@ -1,0 +1,43 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # Password protect Website ONLY FOR LIVE #
+
+    #AuthName "Please login"
+    #AuthType Basic
+    #AuthUserFile /var/www/html/myadvice/.htpasswd
+
+    # Exclude urls from password protection
+    #SetEnvIf Request_URI ^/$ noauth
+    #SetEnvIf Request_URI ^/imprint.* noauth
+    #SetEnvIf Request_URI ^/frontend.* noauth
+    #SetEnvIf Request_URI ^/logo.png noauth
+    #SetEnvIf Request_URI ^/mangopay-hook.* noauth
+    #SetEnvIf Request_URI ^/initial/.* noauth
+
+    #<RequireAny>
+    #   Require env noauth
+    #   Require env REDIRECT_noauth
+    #   Require valid-user
+    #</RequireAny>
+
+    # Password protect END #
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Handle Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>

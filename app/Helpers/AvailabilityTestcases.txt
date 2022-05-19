@@ -1,0 +1,265 @@
+Testcases (A retest is required as we added unavailable_to as well in user unavailabilities relation)
+
+Availability Weekday Slot:-
+Sunday, Monday      :- 10:00 AM to 07:00 PM
+Tuesday             :- 10:00 AM to 04:00 PM
+                       05:00 PM to 07:00 PM
+Wednesday           :- 10:00 AM to 11:00 AM
+Thursday to Saturday:- 10:00 AM to 07:00 PM
+
+A) Two or more unavailabailities starts and ends in a single day
+
+    Tests based unavailability date:- 2019-07-22 (Monday)
+
+    1) First unavailability starts with slot start
+        Example Data:
+            - 10:00 => 12:00
+            - 13:00 => 14:00
+            - 15:00 => 16:00
+        Result: PASSED
+
+    2) Last unavailability end with slot end
+        Example Data:
+            - 11:00 => 12:00
+            - 13:00 => 14:00
+            - 16:00 => 19:00
+        Result: PASSED
+
+    3) First unavailability starts with slot start And Last unavailability end with slot end
+        Example Data:
+            - 10:00 => 12:00
+            - 14:00 => 16:00
+            - 17:00 => 19:00
+        Result: PASSED
+
+    4) One unavailability starts exactly after one ends
+        Example Data:
+            - 11:00 => 12:00
+            - 12:00 => 15:00
+        Result: FAILED (A SLOTS STARTS AND ENDS AT 12:00)
+        Final Status: FIXED, PASSED
+
+    5) One unavailability starts exactly after one ends untill slot ends
+        Example Data:
+            - 10:00 => 13:00
+            - 13:00 => 15:00
+            - 15:00 => 19:00
+        Result: FAILED (Two SLOTS STARTS AND ENDS AT 13:00 AND 15:00 respectively)
+        Final Status: FIXED (slots remove but date still in availability array, need fix)
+
+    6) Unavailability starts before previous unavailability ends
+        Example Data:
+            - 11:00 => 13:00
+            - 12:00 => 15:00
+        Result: FAILED (One slot starts at 13:00 and ends at 12:00, this slot is invalid and it should not even be there)
+        Final Status: FIXED, PASSED
+
+    7) Unavailability is in between existing unavailability
+        Example Data:
+            - 11:00 => 16:00
+            - 12:00 => 15:00
+        Result:FAILED (One slot starts at 16:00 and ends at 12:00, this slot is invalid and it should not even be there)
+        Final Status: FIXED, HANDLED while creation itself, this condition will not be possible.
+
+    8) Unavailability is same as existing unavailability
+        Example Data:
+            - 11:00 => 16:00
+            - 11:00 => 16:00
+        Result:FAILED (One slot starts at 16:00 and ends at 11:00, this slot is invalid and it should not even be there)
+        Final Status: FIXED, PASSED, but TO BE HANDLED while creation itself, this condition will not be possible.
+
+    9) Unvailability starts same as existing and ends in between existing unvailability
+        Example Data:
+            - 11:00 => 16:00
+            - 11:00 => 14:00
+        Result:FAILED
+        Final Status: PASSED, but TO BE HANDLED while creation itself, this condition will not be possible.
+    10) Unvailability starts in between existing and ends same as existing unvailability
+        Example Data:
+            - 11:00 => 16:00
+            - 12:00 => 16:00
+        Result:PASSED, but TO BE HANDLED while creation itself, this condition will not be possible.
+
+B) Two and more unavailabilities, some starts and ends on other day
+
+    1) First unavailabilities starts and ends on single day, other ends on another day. Other day has no more unavailability
+        Example Data:
+            2019-07-26 (Friday)
+                - 11:00 => 14:00
+                - 15:00 (starts)
+            2019-07-27 (Saturday)
+                - 12:00 (Ends)
+        Result: FAILED (26 is alright but no slots shows for 27 which should have started from 12:00 and ended on 19:00)
+        Final Status: FIXED, PASSED
+    2) First unavailabilities starts and ends on single day, other ends on another day. Other day has another 2 unavailability ending on same day
+        Example Data:
+            2019-07-26 (Friday)
+                - 11:00 => 14:00
+                - 15:00 (starts)
+            2019-07-27 (Saturday)
+                - 12:00 (Ends)
+                - 13:00 => 14:00
+                - 17:00 => 18:00
+        Result: FAILED (27 till 12:00 is blocked by prev day unavailability starts but it still shows available from 10:00 to 13:00, this slot should not even be there)
+        Final Status: FIXED, PASSED
+    3) First unavailabilities starts and ends on single day, other ends on another day. Other day has another 2 unavailability, 1 ending on same day and other ending on other day.
+    Example Data:
+        2019-07-26 (Friday)
+            - 11:00 => 14:00
+            - 15:00 (Starts)
+        2019-07-27 (Saturday)
+            - 12:00 (Ends)
+            - 13:00 => 14:00
+            - 17:00 (Starts)
+        2019-07-28 (Sunday)
+            - 13:00 (Ends)
+        Result: FAILED (27 10:00 to 13:00 should not even be there, 28 slots is missing which should be 13:00 to 19:00)
+        Final Status: FIXED, PASSED
+        
+
+C) Multiple Availability slot in a Week Day (All of the above cases with multiple slot for a day)
+    Availability Weekday Slot:-
+        Monday:- :- 10:00 AM to 04:00 PM
+                    05:00 PM to 07:00 PM
+        
+    I) Two or more unavailabilities starts and ends in a single day
+
+        Tests based unavailability date:- 2019-07-22 (Monday)
+
+        1) First unavailability starts with slot start
+            Example Data:
+                - 10:00 => 12:00
+                - 13:00 => 14:00
+                - 15:00 => 16:00
+            Result: PASSED
+
+        2) Last unavailability end with slot end
+            Example Data:
+                - 11:00 => 12:00
+                - 13:00 => 14:00
+                - 16:00 => 19:00
+            Result: PASSED
+
+        3) First unavailability starts with slot start And Last unavailability end with slot end
+            Example Data:
+                - 10:00 => 12:00
+                - 14:00 => 16:00
+                - 17:00 => 19:00
+            Result: PASSED
+
+        4) One unavailability starts exactly after one ends
+            Example Data:
+                - 11:00 => 12:00
+                - 12:00 => 15:00
+            Result: FAILED (A SLOTS STARTS AND ENDS AT 12:00)
+            Final Status: FIXED, PASSED
+
+        5) One unavailability starts exactly after one ends untill slot ends
+            Example Data:
+                - 10:00 => 13:00
+                - 13:00 => 15:00
+                - 15:00 => 19:00
+            Result: FAILED (Two SLOTS STARTS AND ENDS AT 13:00 AND 15:00 respectively)
+            Final Status: FIXED (slots remove but date still in availability array, need fix)
+
+        6) Unavailability starts before previous unavailability ends
+            Example Data:
+                - 11:00 => 13:00
+                - 12:00 => 15:00
+            Result: FAILED (One slot starts at 13:00 and ends at 12:00, this slot is invalid and it should not even be there)
+            Final Status: FIXED, PASSED
+
+        7) Unavailability is in between existing unavailability
+            Example Data:
+                - 11:00 => 16:00
+                - 12:00 => 15:00
+            Result:FAILED (One slot starts at 16:00 and ends at 12:00, this slot is invalid and it should not even be there)
+            Final Status: FIXED, HANDLED while creation itself, this condition will not be possible.
+
+        8) Unavailability is same as existing unavailability
+            Example Data:
+                - 11:00 => 16:00
+                - 11:00 => 16:00
+            Result:FAILED (One slot starts at 16:00 and ends at 11:00, this slot is invalid and it should not even be there)
+            Final Status: FIXED, PASSED, but TO BE HANDLED while creation itself, this condition will not be possible.
+
+        9) Unvailability starts same as existing and ends in between existing unvailability
+            Example Data:
+                - 11:00 => 16:00
+                - 11:00 => 14:00
+            Result:FAILED
+            Final Status: PASSED, but TO BE HANDLED while creation itself, this condition will not be possible.
+        10) Unvailability starts in between existing and ends same as existing unvailability
+            Example Data:
+                - 11:00 => 16:00
+                - 12:00 => 16:00
+            Result:PASSED, but TO BE HANDLED while creation itself, this condition will not be possible.
+
+
+
+********
+
+To find out the availability of coach:-
+
+Goal:- Create an array of unavailable/available dates till next x days
+ 
+- Get available week data (DONE)
+    Mon:- 11am - 8 pm
+    Tue:- 11am - 6pm
+- Get unavailable dates (DONE)
+- Filter out unavailable date for all day and multiple days (DONE)
+- Get available and unavailable date from week availabilities set (DONE)
+- Filter out available days based on filtered unavailable date (DONE)
+    - Check if available date is in the unavailbility set by coach (DONE)
+- Check if available date has been completly booked (DONE)
+    - Same as unavailability
+    - For each day of unavailability check if there are any other slots still available for that day
+- Create availability slots (DONE)
+  - Integrate with partial unavailable
+  - Create partial unavailable when filtering complete unavailable
+  - Use it
+
+------------------------------------------------------------------------------
+
+Goal:- Filter out unavailable date and create slot of partially available day
+
+- Get unavailable dates (DONE)
+ Scenarios:-
+    1) unavailability set for single days
+        - Completly unavailable
+        - Partially unavailable
+    2) unavailability set for multiple days
+        - Completly unavailable first day
+        - Partially unavailable first day
+        - Completely unavailabe last day
+        - Partially unavailable last day
+        - Completly unavailable for days in between
+    3) Multiple unavailabilities in a day
+        - 2 or more unavailabailities starts and ends in a single day
+            - First unavailabilities starts with slot start
+            - Last unavailabilities end with slot end
+            - First unavailabilities starts with slot start And Last unavailabilities end with slot end
+            - One unavailability starts exactly after one ends
+            - One unavailability starts exactly after one ends untill slot ends
+            - Unavailability starts before previous unavailability ends
+            - Unavailability is between existing unavailability
+            - Unavailability is same as existing unavailability
+
+        - First unavailabilities starts and ends on single day, other ends on another day
+        - First unavailabailties starts on other day and ends on this day, second starts and ends on same day
+        - First unavailabailties starts on other day and ends on this day, second and third starts and end on same day
+        - First unavailabailties starts on other day and ends on this day, second starts and ends on same day, third ends on another day
+
+--------------------------------------------------------------------------------
+
+Goal - Filter booked day based on APPOINTMENTS
+ Scenarios:-
+    1) Single slot in a day
+      a) Single Appointment in a day
+      b) Multiple Appointment in a day
+      c) No appointment in a a slot
+    2) Multiple slots in a day
+      a) Single Appointment in each slot
+      b) Multiple Appointment in each slot
+      c) One slot has 1 or more appointment whereas others have none.    
+

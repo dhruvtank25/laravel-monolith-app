@@ -1,0 +1,281 @@
+@font-face {
+font-family: 'Montserrat-Bold';
+src: url('../fonts/Montserrat-Bold.eot?#iefix') format('embedded-opentype'),  url('../fonts/Montserrat-Bold.otf')  format('opentype'),
+url('../fonts/Montserrat-Bold.woff') format('woff'), url('../fonts/Montserrat-Bold.ttf')  format('truetype'), url('../fonts/Montserrat-Bold.svg#Montserrat-Bold') format('svg');
+font-weight: normal;
+font-style: normal;
+}
+
+@font-face {
+font-family: 'Montserrat-Regular';
+src: url('../fonts/Montserrat-Regular.eot?#iefix') format('embedded-opentype'),  url('../fonts/Montserrat-Regular.otf')  format('opentype'),
+url('../fonts/Montserrat-Regular.woff') format('woff'), url('../fonts/Montserrat-Regular.ttf')  format('truetype'), url('../fonts/Montserrat-Regular.svg#Montserrat-Regular') format('svg');
+font-weight: normal;
+font-style: normal;
+}
+@font-face {
+font-family: 'montserratmedium';
+src: url('../fonts/montserrat-medium-webfont.eot');
+src: url('../fonts/montserrat-medium-webfont.eot?#iefix') format('embedded-opentype'),
+url('../fonts/montserrat-medium-webfont.woff2') format('woff2'),
+url('../fonts/montserrat-medium-webfont.woff') format('woff'),
+url('../fonts/montserrat-medium-webfont.ttf') format('truetype'),
+url('../fonts/montserrat-medium-webfont.svg#montserratmedium') format('svg');
+font-weight: normal;
+font-style: normal;
+}
+
+
+/* coach messages page */
+.message_coach_wrapper{
+width:100%;
+}
+.coach_msg_accord .card{
+border:none;
+margin-bottom: 10px;
+}
+.coach_msg_accord .card-header{
+padding:0px;
+border-bottom:none;
+background-color: #fff;
+}
+.coach_msg_accord .card-header:after{
+content: " ";
+display: block;
+background-color: #c4c4c4;
+width: 97%;
+height: 1px;
+margin: 0 auto;
+}
+.coach_msg_accord .card-header button:after {
+font-family: "Font Awesome 5 Free";
+content: "\f077";
+position: absolute;
+right: 15px;
+top: 15px;
+}
+.coach_msg_accord .card-header button.collapsed:after {
+content: "\f078";
+}
+.coach_msg_accord h2{
+line-height:0px;
+}
+.coach_msg_accord button{
+width: 100%;
+text-align: left;
+padding: 15px;
+font-family: 'Montserrat-Bold';
+color: #292929;
+}
+.coach_msg_accord button:hover, .coach_msg_accord button:focus{
+color: #292929;
+text-decoration: none;
+}
+.coach_msg_accord .card-body{
+font-family: 'Montserrat-Regular';
+color: #292929;
+}
+.coach_msg_content{
+display:inline-block;
+vertical-align:top;
+}
+.ch_msg_pro_pic img{
+width:55px;
+margin-right:25px;
+}
+.ch_msg_para{
+width:90%;
+}
+.ch_msg_para p{
+font-family: 'Montserrat-Regular';
+color: #292929;
+}
+.ch_msg_para p.ch_date_msg{
+color: #c4c4c4;
+}
+.ch_msg_para h6{
+font-family: 'Montserrat-Bold';
+color: #292929;
+}
+.ch_msg_para button{
+width: auto;
+padding: 5px 20px;
+}
+.coach_msg_modal .modal-dialog{
+top:10%;
+max-width:600px;
+}
+.coach_msg_modal .modal-header{
+padding: 0px;
+border: none;
+}
+.coach_msg_modal .modal-body{
+padding:0px;
+}
+.coach_msg_modal .modal-body.coach_msg_body form input, .coach_msg_modal .modal-body.coach_msg_body form textarea{
+border-radius:0px;
+border:1px solid #000;
+}
+.coach_msg_modal .modal-body.coach_msg_body form textarea{
+height:400px;
+}
+.pop_file_upload .file-upload{
+position: relative;
+overflow: hidden;
+display: inline-block;
+}
+.pop_file_upload .file-upload .modal_file_upload {
+position: relative;
+border-radius: 20px;
+background: transparent;
+font-size: 14px;
+border: 2px solid #292929;
+color: #292929;
+font-family: 'Montserrat-Bold';
+padding: 5px 20px;
+}
+.pop_file_upload .file-upload input[type=file] {
+position: absolute;
+left: 0;
+top: 0;
+bottom: 0;
+opacity: 0;
+}
+.msg_attachment{
+margin:20px 0;
+}
+
+.attachicon{
+font-size: 20px;
+float: left;
+}
+
+.attachname{
+font-family: "montserratmedium" !important;
+font-weight: 800;
+color:#242424;
+}
+
+.msg_thread_wrapper{
+border-bottom: 1px solid #c4c4c4;
+margin-top: 25px;
+padding-bottom: 10px;
+}
+
+.coach_msg_accord .card-body .msg_thread_wrapper:last-child{
+border:none;
+}
+
+.reply_chat_btn{
+width:120px !important;
+padding:5px !important;
+text-align: center !important;
+margin-top: -15px;
+margin-bottom: 20px !important;
+}
+
+.message_upload_wrapper{
+border:none !important;
+padding: 0px 15px;
+min-height: 0px;
+}
+
+.message_upload_wrapper .dropzone-previews div{
+width: 27%;
+}
+
+.dropzone.message_upload_wrapper .dz-message{
+margin:0 !important;
+}
+
+.dropzone.message_upload_wrapper .dz-filename{
+width: 100%;
+margin-left: 0px !important;
+}
+
+.create_thread_date{
+margin-right:40px;
+color: #c4c4c4;
+font-family: 'Montserrat-Regular';
+margin-bottom:0;
+}
+
+.ch_msg_pro_pic img{
+border-radius: 50%; 
+overflow: hidden;
+}
+
+.blk_bor_btn {
+border-radius: 20px;
+font-size: 14px;
+border: 2px solid #292929;
+color: #292929;
+font-family: 'Montserrat-Bold';
+padding: 5px 20px;
+}
+.orange_background_btn {
+border: none;
+color: #ffffff;
+font-family: 'Montserrat-Bold';
+border: 2px solid transparent;
+font-size: 14px;
+border-radius: 20px;
+padding: 5px 20px;
+background: #F86C59;
+cursor: pointer;
+}
+.modal-content {
+border-radius: 0px;
+padding: 20px;
+}
+
+.stop_modal_btn {
+float: left;
+border-radius: 20px;
+background: transparent;
+font-size: 14px;
+border: 2px solid #292929;
+color: #292929;
+font-family: 'Montserrat-Bold';
+padding: 3px 20px;
+}
+
+.choose_modal_btn {
+float: right;
+padding: 3px 20px;
+border: 2px solid #F86C59;
+background-color: #F86C59;
+color: #fff;
+font-family: 'Montserrat-Bold';
+border-radius: 20px;
+}
+
+.dropzone-previews {
+width: 100%;
+}
+
+.dropzone-previews .dz-details {
+min-width: 85% !important;
+}
+
+.dropzone .dz-preview .dz-remove{
+width:80%;
+}
+
+
+.dz-details div{
+width:100% !important;
+}
+
+.dropzone .dz-preview.dz-complete .dz-progress{
+transform: translateX(-18%);
+}
+
+.unreadmsg h2 button:before{
+content:"";
+background:#f86c59;
+width:10px;
+height: 10px;
+border-radius:50%;
+display: inline-block;
+}

@@ -1,0 +1,277 @@
+                        New Availability (Received html on 19 July)
+
+################
+# DB Structure #
+################
+Schema::create('coach_availabilities', function (Blueprint $table) {
+    $table->bigIncrements('id');
+    $table->integer('coach_id');
+    $table->enum('status', ['available', 'unavailable'])->default('available');
+    $table->date('date_on');
+    $table->time('time_from');
+    $table->time('time_to');
+    $table->enum('recurring', ['single', 'weekly', 'daily'])->default('single');
+    $table->integer('recurring_weeks')->default(0)->comments('recurring exists for x no of weeks');
+    $table->string('recurring_week_days')->nullable()->comments('comma separated week day numbers');
+    $table->date('recurring_end')->nullable();
+    $table->timestamps();
+});
+
+###################
+# Important Notes #
+###################
+
+* Override flows / Preferences:-
+    - No Overrides as per the discussion with the client.
+    - Previously: 
+    - Each Day -> By weekly -> Everyday
+    - Specific date's set schedule will override all others, irresepective of when series where started.
+    - Byweekly series will override everyday series if any, irrespective when everyday series is created.
+    - No more Override now. All types of slots will be used.
+
+* Everyday series override
+    If everyday series is started on an existing everyday series with a similar timeslots then sub series process will be followed.
+    Ex:-
+        An series has started for everyday from 15 july at 12:00 to 14:00.
+        New everyday series is created from 20 july at 13:00 to 15:00.
+        Then,
+        From 15 july to 19 july, series will be 12:00 to 14:00
+        From 20 july to further, series will be 13:00 to 15:00
+
+* When slots are not available in future (4 slots are booked either via single/weekly/daily type) irrespective of whatever reason, then that day will not be part of any new series created.
+    => Maximum limit of 4 slots per date has been removed as per discussion with client.
+    => So all of the slots will be shown to user event though total slots get greater than 4.
+
+* What if 2 slot is created with conflict i.e. 11:00 to 12:00, 12:00 to 14:00.
+    => As per discussion with client all the slots will be merged. So final availability will get
+    updated to 11:00 to 14:00.
+    => Previous Solution:-
+    => Not possible for single type slots.
+    => Incase of conflict between single and recurring slot, Single slot will be considered and other recurring slot will be invalid for that date.
+    => Incase of conlict between daily recurring and weekly recurring slot, Weekly recurring slot will beconsidered and daily recurring slot will be invalid for that date.
+    => So when single slot booked from 11:00 to 12:00 and daily recurring set from 12:00 to 14:00 for date 23 july 2019, Then this day will not have slot from 12:00 to 14:00.
+
+* Upon editing an series slot from series start date
+    -> If series checkbox is checked, then current series record will be updated.
+    -> If series checkbox is unchecked, then new single slot will be created for the date and series record recurring_start time and date_on should get updated to next date.
+    -> If coach wants to update and stop series, then either they should delete series and create a new single slot or edit it unchecking series and delete series slot on next date.
+
+* Upon editing an series slot in between a series start
+    -> An option to "Update slot for all future series date" or "Update for this date only" will be provided to caoch, upon which further action will be triggered.
+    -> If coach selects update all, then new series record will be created. Previous series record recurring_end time should get updated to last date.
+    -> If coach selects current only, then new single slot will be created for that date. Series checkbox will be unchecked.
+
+* Upon deleting an series slot from series start date
+    -> An option to "Empty slot for all future series date" or "Empty slot for this date only" will be provided to coach, upon which further action will be triggered.
+    -> If coach selects to stop recurring then recurring slot should be deleted.
+    -> If coach selects to stop for current date only, then recurring date_on and recurring_start should be updated to next date.
+
+* Upon deleting series slot in between a series start
+    -> An option to "Empty slot for all future series date" or "Empty slot for this date only" will be provided to coach, upon which further action will be triggered.
+    -> If coach selects to stop recurring then recurring record end_recurring should be updated to previous date.
+    -> If coach selects to stop for current date only, 
+        How will we stop a series for only oneday?
+         Possible solution:
+            start new copy series from next date, change recurring_end date of initial series to last_date
+
+* What if user wants to make a date unavailable?
+    -> Unavailable date needs to be set for each date.
+    -> Further client came up with new design providing an option to create Unavailability range.
+    -> When coach deletes all slots at any date and clicks save then that date will be considered as unavailable.
+    -> Series will not be affected if any. Only this date will be unavailable.
+    -> Technical Solution:- 
+        # Add a record of unavailable in same table with date as selected. Set time_from and time_to as 00 and 23 respectively for future changes purpose. Other fields will be set as default. 
+        # This way there will never be no record for a date when set unavailable.
+        # There should be no available record for an unvailable date. While creating unavailable record, delete all the single slot record for that date and if any series is started on same date then set its start date to be next date.
+        # So when Coach comes back and adds a new slot to an unavailable date then no previous slot will become active and unavailable record should get deleted.
+
+########################
+# Slot Recurring Types #
+########################
+1) Single (time slots are set for each date)
+2) Daily (time slots goes on for all future dates)
+3) Weekly (Select date's weekday repeats for x weeks)
+
+#######################
+# Update availability #
+#######################
+
+* When data-update-recurring is not set than that means it is true and all such process will be followed.
+* Upon ending previous recurring make a check that series end date is >= series start date, else delete previous series.
+
+1) Uncheck series With data-update-recurring=false
+-> Update for single day only.
+-> End previous recurring to last date, create copy of recurring starting form next date and create
+    a single slot for provided date.
+-> Skip copy of recurring if type is weekly and recurring start > recurring end. This means weekly recurring has ended on this update date itself.
+
+2) Uncheck series with data-update-recurring=true
+-> Update for recurring
+-> Indications of end of recurring here.
+-> End previous recurring to last date, create a single slot for provided date.
+
+3) Check series irrespective of data-update-recurring is true or false
+-> Update for recurring
+-> This ends the previous series and starts a new series from here.
+-> End previous recurring to last date, create a new series from this date.
+
+#######################
+# Delete availability #
+#######################
+
+* Upon ending previous recurring make a check that series end date is >= series start date, else delete previous series.
+
+1) Single type recurring
+-> Delete recurring record
+
+2) Recurring series with stop recurring false
+-> Delete for single day only
+-> End previous recurring to last date, create copy of recurring starting from next date.
+-> So this date will have no such recurring.
+
+3) Recurring series with stop recurring true
+-> Delete for complete series from this date.
+-> End previous recurring to last date.
+-> So this date onwards there will be no such recurring.
+
+#######################
+# Examples/ Testcases #
+#######################
+
+
+Scenarios to test:
+
+1) Deleting a recurring slots.
+    i) Slot is a Single slot
+        -> Simply deletes the slot.
+    ii) Slot is a Recurring slot
+    Cases:  User selects delete future recurring as "yes".
+        Case: Selected date is same as recurring start date (Way to delete complete slot)
+            -> This Should delete complete slot from start.
+        Case: Selected date is in between recurring
+            -> This Should delete slot from selected date.
+            -> Slot Should be available for all previous valid dates.
+            -> Programitical solution
+            Case: Daily Recurring
+                -> Slot Ends on previous date of selected date.
+            Case: Weekly Recurring
+                -> Slot Ends on previous week of selected date.
+        Case: Selected date is same as recurring end date
+            -> Slot Should be available for all previous valid dates.
+            -> Programitical solution
+            Case: Daily Recurring
+                -> Slot Ends on previous day of selected date.
+            Case: Weekly Recurring
+                -> Slot Ends on previous week of selected date.
+    Cases:  User selects delete future recurring as "no".
+        Case: Selected date is same as recurring start date
+            -> Slot should be deleted for this date only.
+            -> Recurring should be available for future date.
+            -> Programitical solution
+            Case: Daily Recurring
+                -> New recurring slot starts from next date of selected date.
+            Case: Weekly Recurring
+                -> New recurring slot starts from next week of selected date.
+        Case: Selected date is in between recurring
+            -> Slot should be deleted for this date only.
+            -> Slot Should be available for all previous and future valid dates.
+            -> Programitical solution
+            Case: Daily Recurring
+                -> Slot Ends on previous date of selected date.
+                -> New recurring slot starts from next date of selected date.
+            Case: Weekly Recurring
+                -> Slot Ends on previous week of selected date.
+                -> New recurring slot starts from next week of selected date.
+        Case: Selected date is same as recurring end date
+            -> Slot Should be available for all previous valid dates.
+            -> Programitical solution
+            Case: Daily Recurring
+                -> Slot Ends on previous day of selected date.
+            Case: Weekly Recurring
+                -> Slot Ends on previous week of selected date.
+    iii) Slot is the last slot for that date.
+        ->  Date should get set as unavailable
+
+2) Updating a recurring slots.
+    i) Slot is a Single slot
+        -> Simply updates the slot.
+    ii) Slot is a Recurring slot
+    Cases:  User selects update future recurring as "yes".
+        Case: Selected date is same as recurring start date (Way to update complete recurring)
+            -> Complete slot gets updated even for future recurring dates.
+        Case: Selected date is in between recurring
+            -> This Should update slot from selected date.
+            -> Slot Should be same for all previous dates as is was And a Future slots from this date will be based upon new data.
+            -> Programitical solution
+            Case: Daily Recurring
+                -> Slot Ends on previous date of selected date with previously set data.
+                -> New slot with new recurring data from selected date.
+            Case: Weekly Recurring
+                -> Slot Ends on previous week of selected date with previously set data.
+                -> New slot with new recurring data from selected date.
+        Case: Selected date is same as recurring end date
+            -> Slot Should be same for all previous dates as is was
+            -> Programitical solution
+            Case: Daily Recurring
+                -> Slot Ends on previous date with previously set data.
+                -> New single slot new data for selected date.
+            Case: Weekly Recurring
+                -> Slot Ends on previous week of selected date with previously set data.
+                -> New single slot new data for selected date.
+    Cases:  User selects update future recurring as "no".
+        Case: Selected date is same as recurring start date
+            -> Slot should be update for this date only.
+            -> Recurring should be available for future date with previously set data.
+            -> Programitical solution
+            Case: Daily Recurring
+                -> Recurring slot starts from next date of selected date.
+                -> New Single slot gets created for selected date with new data.
+            Case: Weekly Recurring
+                -> Recurring slot starts from next week of selected date.
+                -> New Single slot gets created for selected date with new data.
+        Case: Selected date is in between recurring
+            -> Slot should be updated for this date only.
+            -> Slot Should be same for all previous and future valid dates with previously set data.
+            -> Programitical solution
+            Case: Daily Recurring
+                -> Slot Ends on previous date with previously set data.
+                -> New Single slot gets created for selected date with new data.
+                -> Slot Starts from next date with previously set data.
+            Case: Weekly Recurring
+                -> Slot Ends on previous week of selected date with previously set data.
+                -> New Single slot gets created for selected date with new data.
+                -> Slot Starts from next week with previously set data.
+        Case: Selected date is same as recurring end date (only when recurring is weekly)
+            -> Slot should be updated for this date only.
+            -> Slot Should be same for all previous valid dates.
+            -> Programitical solution
+            Case: Daily Recurring
+                -> Slot Ends on previous date with previously set data.
+                -> New single slot new data for selected date.
+            Case: Weekly Recurring
+                -> Slot Ends on previous week of selected date with previously set data.
+                -> New single slot new data for selected date.
+
+3) Setting an Unavailability
+    -> Unavailability dates once set will delete all the slots in between even the slots starting the recurring one.
+    -> Even when unavailability record is deleted, previously assigned slots even those started by recurring will not come back.
+    -> Programitical solution
+    Cases:  Setting unavailability for a date
+        -> Unavailabilty by this way can only be set when all slots are deleted and saved is clicked.
+        -> Programmitical solution
+            Add an unavailability status record starting and end on same day with recurring type daily.
+    Cases:  Setting unavailability for a range
+        Case: Single Slot
+            -> Delete all such single slots.
+            -> Create an unavailability status record starting and ending as requested.
+        Case: Recurring Slot
+            -> Update all recurring slots, which are starting in between requested dates and ending after requested dates, to start from next date of unavailability end date.
+            -> Create an unavailability status record starting and ending as per requested date
+
+4) Creating a new slot
+    -> Slots are created with no validation of any slot conflicts. All slots are valid and will stay.
+    -> Slot can be of three types:
+        a) Single (will not reoccur daily/weekly)
+        b) Daily recurring (slot created will be available everyday)
+        c) Weekly recurring (slot created on monday for 5 weeks will get set for next 5 mondays)
+    -> If a date is unavailable/no availability slots are visible and coach creates a new slot then coach will automatically get unavailable for that date.
